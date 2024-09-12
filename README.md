@@ -17,10 +17,13 @@ This is a simple To-Do List web application using Vue.js for functionality and B
 ### 4. **Display Completed Tasks**
    - A counter shows how many tasks have been marked as completed. This feature helps users track their progress at a glance by comparing completed tasks to the total tasks.
 
-### 5. **Mark Tasks as Complete**
+   ### 5. **Validation to Prevent Adding Empty Tasks**
+- The app includes input validation to ensure users cannot add empty tasks. If a user attempts to submit an empty input, an error message is displayed, prompting the user to enter a valid task before submitting.
+
+### 6. **Mark Tasks as Complete**
    - Each task can be marked as completed with a checkbox. Completed tasks are visually distinguished (e.g., strikethrough) from pending tasks. The state of each task is stored in local storage to ensure persistence across sessions.
 
-### 6. **Filter Tasks**
+### 7. **Filter Tasks**
    - The app provides filtering options that allow users to display:
      - **All tasks**: Shows both completed and pending tasks.
      - **Pending tasks**: Displays only the tasks that are yet to be completed.
