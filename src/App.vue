@@ -12,20 +12,26 @@ const filter = ref('all');
 const errorMessage = ref('');
 const completedTasks = computed(() => tasks.value.filter(task => task.completed).length);
 
-onMounted(async () => {
-  const savedTasks = localStorage.getItem('tasks');
-  tasks.value = savedTasks ? JSON.parse(savedTasks) : [];
-
+const fetchTasks = async()=>{
   try {
     // Fetching sample tasks from a remote API.
-    const response = await fetch('https://run.mocky.io/v3/16c30903-3570-44ea-a0e8-848cbeffc3a6');
-    if (!response.ok) throw new Error('Network response was not ok');
+ const response = await fetch('https://run.mocky.io/v3/16c30903-3570-44ea-a0e8-848cbeffc3a6');
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`); // Handle HTTP error
+    }
     const data = await response.json();
     tasks.value = data.map(task => ({ task: task.task, completed: task.completed }));
   } catch (error) {
 
     console.error('There was a problem with the fetch operation:', error);
   }
+}
+
+onMounted(() => {
+  fetchTasks()
+  const savedTasks = localStorage.getItem('tasks');
+  tasks.value = savedTasks ? JSON.parse(savedTasks) : [];
 });
 
 const formSubmitHandler = () => {
