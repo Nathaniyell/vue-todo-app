@@ -12,40 +12,58 @@ const filter = ref('all');
 const errorMessage = ref('');
 const completedTasks = computed(() => tasks.value.filter(task => task.completed).length);
 
-const fetchTasks = async()=>{
+const fetchTasks = async () => {
   try {
     // Fetching sample tasks from a remote API.
- const response = await fetch('https://run.mocky.io/v3/16c30903-3570-44ea-a0e8-848cbeffc3a6');
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+    // const response = await fetch('https://run.mocky.io/v3/16c30903-3570-44ea-a0e8-848cbeffc3a6');
+
     
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`); // Handle HTTP error
     }
+    
     const data = await response.json();
-    tasks.value = data.map(task => ({ task: task.task, completed: task.completed }));
+    tasks.value = data.slice(0, 5);
   } catch (error) {
-
     console.error('There was a problem with the fetch operation:', error);
   }
-}
+};
 
 onMounted(() => {
-  fetchTasks()
+  // Load tasks from localStorage first
   const savedTasks = localStorage.getItem('tasks');
-  tasks.value = savedTasks ? JSON.parse(savedTasks) : [];
+  if (savedTasks) {
+    tasks.value = JSON.parse(savedTasks);
+  } else {
+    // Fetch tasks from API if no saved tasks found
+    fetchTasks();
+  }
 });
 
 const formSubmitHandler = () => {
-
   if (newTask.value.trim() === '') {
-
     errorMessage.value = "Input field is empty, please enter a task";
     setTimeout(() => { errorMessage.value = ''; }, 5000);
     return;
   }
-  tasks.value.push({ task: newTask.value, completed: false });
+
+  // Ensure the new task follows the structure of API data
+  const newTaskData = {
+    userId: 1, 
+    id: tasks.value.length + 1, 
+    title: newTask.value,
+    completed: false
+  };
+  // const newTaskData = {
+    //   id: tasks.value.length + 1, 
+  //   task: newTask.value,
+  //   completed: false
+  // };
+
+  tasks.value.push(newTaskData);
   newTask.value = '';
 };
-
 
 const removeTask = (index) => {
   tasks.value.splice(index, 1);

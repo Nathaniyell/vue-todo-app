@@ -8,9 +8,9 @@
 
 <template>
     <ul v-if="filteredTasks.length !== 0" class="list-group mt-3">
-      <li class="list-group-item hstack gap-3" v-for="(singleTask, index) in filteredTasks" :key="index">
+      <li class="list-group-item hstack gap-3" v-for="(singleTask, index) in filteredTasks" :key="singleTask.id">
         <span :class="{ 'text-decoration-line-through': singleTask.completed }">
-    {{ singleTask.task }}
+    {{ singleTask.title }}
   </span>
         <span class="hstack form-switch gap-3 ms-auto">
           <input type="checkbox" class="form-check-input" role="switch" v-model="singleTask.completed">
