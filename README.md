@@ -21,7 +21,7 @@ This is a simple To-Do List web application using Vue.js for functionality and B
 - The app includes input validation to ensure users cannot add empty tasks. If a user attempts to submit an empty input, an error message is displayed, prompting the user to enter a valid task before submitting.
 
 ### 6. **Mark Tasks as Complete**
-   - Each task can be marked as completed with a checkbox. Completed tasks are visually distinguished (e.g., strikethrough) from pending tasks. The state of each task is stored in local storage to ensure persistence across sessions.
+   - Each task can be marked as completed with a checkbox. Completed tasks are visually distinguished (crossed off) from pending tasks. The state of each task is stored in local storage to ensure persistence across sessions.
 
 ### 7. **Filter Tasks**
    - The app provides filtering options that allow users to display:
